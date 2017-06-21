@@ -1,2 +1,2 @@
-# notadd_auth
-notadd auth model
+# notadd_vuser
+notadd user model
