@@ -24,7 +24,10 @@ class VuserHandler extends Handler {
      */
     protected function execute()
     {
-        return 'vuser test';
+        $data = [
+            'msg' => 'this is a test'
+        ];
+        return json_encode($data);
     }
 
 }

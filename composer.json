@@ -3,10 +3,10 @@
   "description": "Notadd's user Module.",
   "keywords": [
     "notadd",
-    "user"
+    "vuser"
   ],
   "homepage": "https://abcdkyd.github.io",
-  "license": "MIT License",
+  "license": "Apache-2.0",
   "type": "notadd-module",
   "authors": [
     {
@@ -15,7 +15,9 @@
     }
   ],
   "require": {
-    "php": ">=7.0",
+    "php": ">=7.0"
+  },
+  "require-dev": {
     "notadd/installers": "0.5.*"
   },
   "autoload": {
@@ -23,4 +25,5 @@
       "Notadd\\Vuser\\": "src/"
     }
   }
+
 }
