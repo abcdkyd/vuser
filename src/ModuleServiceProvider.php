@@ -18,4 +18,35 @@ class ModuleServiceProvider extends ServiceProvider {
         $this->app->make(Dispatcher::class)->subscribe(RouteRegister::class);
     }
 
+    /**
+     * Description of module
+     *
+     * @return string
+     */
+    public static function description()
+    {
+        return 'Notadd 用户管理模块';
+    }
+
+    /**
+     * Name of module.
+     *
+     * @return string
+     */
+    public static function name()
+    {
+        return '用户管理';
+    }
+
+    /**
+     * Register module extra providers.
+     */
+    public function register()
+    {
+        $this->app->singleton('integral', function ($app) {
+            return new IntegralManager($app);
+        });
+    }
+
+
 }
