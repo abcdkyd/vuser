@@ -20,7 +20,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Notadd\\Content\\": "src/"
+      "Notadd\\Vuser\\": "src/"
     }
   }
 }
