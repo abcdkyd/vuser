@@ -3,7 +3,9 @@
   "description": "Notadd's user Module.",
   "keywords": [
     "notadd",
-    "vuser"
+    "vuser",
+    "cms",
+    "framework"
   ],
   "homepage": "https://abcdkyd.github.io",
   "license": "Apache-2.0",
