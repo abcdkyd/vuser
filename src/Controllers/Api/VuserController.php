@@ -9,7 +9,7 @@
 namespace Notadd\Vuser\Controllers\Api;
 
 use Notadd\Foundation\Routing\Abstracts\Controller;
-use Notadd\Member\Handlers\User\VuserHandler;
+use Notadd\Vuser\Handlers\Vuser\VuserHandler;
 
 class VuserController extends Controller {
 

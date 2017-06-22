@@ -11,6 +11,8 @@ namespace Notadd\Vuser;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Support\ServiceProvider;
 use Notadd\Vuser\Listeners\RouteRegister;
+use Notadd\Vuser\Injections\Installer;
+use Notadd\Vuser\Injections\Uninstaller;
 
 class ModuleServiceProvider extends ServiceProvider {
 
@@ -38,15 +40,24 @@ class ModuleServiceProvider extends ServiceProvider {
         return '用户管理';
     }
 
+
     /**
-     * Register module extra providers.
+     * Install module.
+     *
+     * @return string
      */
-    public function register()
+    public static function install()
     {
-        $this->app->singleton('integral', function ($app) {
-            return new IntegralManager($app);
-        });
+        return Installer::class;
     }
 
-
+    /**
+     * Uninstall module.
+     *
+     * @return string
+     */
+    public static function uninstall()
+    {
+        return Uninstaller::class;
+    }
 }
