@@ -6,7 +6,7 @@
  * Time: 下午2:59
  */
 
-namespace Notadd\Member\Handlers\User;
+namespace Notadd\Vuser\Handlers\Vuser;
 
 use Illuminate\Container\Container;
 use Notadd\Foundation\Routing\Abstracts\Handler;
