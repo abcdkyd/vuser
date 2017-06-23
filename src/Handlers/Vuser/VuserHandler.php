@@ -24,10 +24,12 @@ class VuserHandler extends Handler {
      */
     protected function execute()
     {
-        $data = [
-            'msg' => 'this is a test'
-        ];
-        return json_encode($data);
+        view('index');
+
+//        $data = [
+//            'msg' => 'this is a test'
+//        ];
+//        return json_encode($data);
     }
 
 }
