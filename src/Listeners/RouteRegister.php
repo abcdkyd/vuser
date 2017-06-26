@@ -14,9 +14,12 @@ use Notadd\Vuser\Controllers\Api\VuserController;
 class RouteRegister extends AbstractRouteRegister {
 
     public function handle() {
-        $this -> router -> group(['middleware' => ['auth:api', 'cross', 'web'], 'prefix' => 'api/vuser'], function () {
-            $this -> router -> get('getIndex', VuserController::class . '@getIndex');
+
+        $this->router->group(['middleware' => ['api', 'cross', 'web'], 'prefix' => 'vuser'], function () {
+            $this->router->post('/', VuserController::class . '@access');
+            $this->router->get('/', VuserController::class . '@index');
         });
+
 
         $this -> router -> group(['middleware' => ['cross', 'web'], 'prefix' => 'vuser'], function () {
             $this -> router -> post('token', VuserController::class . '@token');
