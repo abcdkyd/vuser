@@ -8,15 +8,12 @@
  */
 namespace Notadd\Vuser\Controllers\Api;
 
-use Notadd\Vuser\Handlers\Vuser\VuserHandler;
 use Exception;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Routing\UrlGenerator;
 use Laravel\Passport\Client as PassportClient;
 use League\OAuth2\Server\AuthorizationServer;
 use Notadd\Foundation\Auth\AuthenticatesUsers;
-use Notadd\Foundation\Extension\ExtensionManager;
-use Notadd\Foundation\Module\ModuleManager;
 use Notadd\Foundation\Passport\Responses\ApiResponse;
 use Notadd\Foundation\Routing\Abstracts\Controller;
 use Notadd\Foundation\Translation\Translator;
