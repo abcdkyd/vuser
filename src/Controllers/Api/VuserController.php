@@ -17,4 +17,8 @@ class VuserController extends Controller {
         return $handler->toResponse()->generateHttpResponse();
     }
 
+    public function handle() {
+        return 1232;
+    }
+
 }
