@@ -26,7 +26,51 @@ use Zend\Diactoros\Response as Psr7Response;
 
 class VuserController extends Controller {
 
-    public function handle() {
+    use AuthenticatesUsers;
+
+    /**
+     * @var int
+     */
+    protected $client_id;
+
+    /**
+     * @var string
+     */
+    protected $client_secret;
+
+    /**
+     * @var \League\OAuth2\Server\AuthorizationServer
+     */
+    protected $server;
+
+    /**
+     * @var \Notadd\Foundation\Translation\Translator
+     */
+    protected $translator;
+
+    /**
+     * @var \Illuminate\Routing\UrlGenerator
+     */
+    protected $url;
+
+    /**
+     * AdminController constructor.
+     *
+     * @param \League\OAuth2\Server\AuthorizationServer $server
+     * @param \Notadd\Foundation\Translation\Translator $translator
+     */
+    public function __construct(AuthorizationServer $server, Translator $translator)
+    {
+        parent::__construct();
+        $this->client_id = 1;
+        $client = PassportClient::query()->findOrFail($this->client_id);
+        $this->client_secret = $client->getAttribute('secret');
+        $this->translator = $translator;
+        $this->url = $this->container->make(UrlGenerator::class);
+        $this->server = $server;
+    }
+
+    public function index() {
         return view('index');
     }
 
