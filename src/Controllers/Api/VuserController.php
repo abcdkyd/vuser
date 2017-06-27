@@ -14,7 +14,7 @@ use League\OAuth2\Server\AuthorizationServer;
 use Notadd\Foundation\Auth\AuthenticatesUsers;
 use Notadd\Foundation\Routing\Abstracts\Controller;
 use Illuminate\Support\Facades\Auth;
-
+use Notadd\Foundation\Translation\Translator;
 
 class VuserController extends Controller {
 
@@ -77,13 +77,18 @@ class VuserController extends Controller {
             }
         }
 
+        $this->incrementLoginAttempts($this->request);
 
         return response() -> json([
             'status' => 'error',
-            'msg' => $this -> translator -> trans('vuser::login.fail'),
+            'msg' => 'false',
             'code' => 310
         ]);
 
+    }
+
+    public function username() {
+        return 'name';
     }
 
 
