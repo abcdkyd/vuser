@@ -16,8 +16,10 @@ class RouteRegister extends AbstractRouteRegister {
     public function handle() {
 
         $this->router->group(['middleware' => ['api', 'cross', 'web'], 'prefix' => 'vuser'], function () {
-            $this->router->post('/', VuserController::class . '@access');
-            $this->router->get('/', VuserController::class . '@index');
+            $this -> router -> get('/', VuserController::class . '@show');
+            $this -> router -> post('/', VuserController::class . '@access');
+            $this -> router -> post('login', VuserController::class . '@login');
+
         });
 
 
