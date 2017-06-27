@@ -7,6 +7,6 @@
  */
 
 return [
-    'success' => '登录成功',
+    'success' => '成功登录',
     'fail' => '登录失败',
 ];
