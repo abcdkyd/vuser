@@ -15,17 +15,16 @@ class RouteRegister extends AbstractRouteRegister {
 
     public function handle() {
 
+        $this->router->group(['middleware' => ['cross', 'web'], 'prefix' => 'vuser'], function () {
+            $this -> router -> post('token', VuserController::class . '@token');
+        });
+
         $this->router->group(['middleware' => ['api', 'cross', 'web'], 'prefix' => 'vuser'], function () {
             $this -> router -> get('/', VuserController::class . '@show');
             $this -> router -> post('/', VuserController::class . '@access');
-            $this -> router -> post('login', VuserController::class . '@login');
 
         });
 
-
-        $this -> router -> group(['middleware' => ['cross', 'web'], 'prefix' => 'vuser'], function () {
-            $this -> router -> post('token', VuserController::class . '@token');
-        });
     }
 
 

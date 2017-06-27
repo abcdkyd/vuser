@@ -31,6 +31,10 @@ class VuserController extends Controller {
         return view('index');
     }
 
+    public function handle() {
+        return view('index');
+    }
+
     public function access(AuthManager $auth) {
         if($auth->guard('api')->user()) {
 
@@ -51,7 +55,7 @@ class VuserController extends Controller {
         ]);
     }
 
-    public function login() {
+    public function token() {
 
         $this->validateLogin($this->request);
         if ($this->hasTooManyLoginAttempts($this->request)) {
@@ -65,19 +69,21 @@ class VuserController extends Controller {
             ]);
         }
 
-        $credentials = $this->credentials($this->request);
+        $this->incrementLoginAttempts($this->request);
 
+        $credentials = $this->credentials($this->request);
+        dd($credentials);
         if ($this->guard()->attempt($credentials, $this->request->has('remember'))) {
             $this->request->session()->regenerate();
             $this->clearLoginAttempts($this->request);
-            try {
 
-            } catch (Exception $exception) {
-
-            }
+            return response() -> json([
+                'status' => 'ok',
+                'msg' => 'login success',
+                'code' => 200
+            ]);
         }
 
-        $this->incrementLoginAttempts($this->request);
 
         return response() -> json([
             'status' => 'error',
