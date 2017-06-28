@@ -28,18 +28,12 @@ class VuserController extends Controller {
     }
 
     public function show() {
-        return view('index');
-    }
-
-    public function handle() {
-        return view('index');
+        return view('vuser::index');
     }
 
     public function access(AuthManager $auth) {
+
         if($auth->guard('api')->user()) {
-
-
-
 
             return response() -> json([
                 'status' => 'ok',
@@ -79,14 +73,14 @@ class VuserController extends Controller {
 
             return response() -> json([
                 'status' => 'ok',
-                'msg' => 'login success',
+                'msg' => $this->translator->trans('vuser::login.success'),
                 'code' => 200
             ]);
         }
 
 
         return response() -> json([
-            'status' => 'error',
+            'status' => $this->translator->trans('vuser::login.fail'),
             'msg' => 'false',
             'code' => 310
         ]);

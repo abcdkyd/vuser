@@ -13,28 +13,22 @@
 
     <input type="text" name="name">
     <input type="password" name="password" id="password">
-    <?php echo csrf_field();?>
-    <input type="button" id="sub" value="提交">
+    <input type="button" id="sub_btn" value="提交">
 
     <script>
+
         jQuery(function ($) {
 
-            $('#sub').click(function () {
-
-                var token = $("input[name='_token']").val();
+            $('#sub_btn').click(function () {
 
                 $.ajax({
                     type: "POST",
-                    url : 'http://phjr.alpha/vuser/token',
-                    headers: {
-                        'X-XSRF-TOKEN': $("input[name='_token']").val(),
-                        'X-Requested-With': 'XMLHttpRequest'
-                    },
-                    data: {
+                    url : '/vuser/token',
+                    contentType:'application/json;charset=UTF-8',
+                    data: JSON.stringify({
                         name: $("input[name='name']").val(),
                         password: $('#password').val(),
-                        '_token': $("input[name='_token']").val()
-                    },
+                    }),
                     success: function (json) {
                         console.log(json)
                     },
@@ -46,7 +40,7 @@
                 });
 
             });
-            
+
         });
     </script>
 </form>

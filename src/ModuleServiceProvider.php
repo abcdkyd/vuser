@@ -8,7 +8,9 @@
 
 namespace Notadd\Vuser;
 
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Events\Dispatcher;
+use Notadd\Vuser\Listeners\CsrfTokenRegister;
 use Illuminate\Support\ServiceProvider;
 use Notadd\Vuser\Listeners\RouteRegister;
 use Notadd\Vuser\Injections\Installer;
@@ -16,8 +18,16 @@ use Notadd\Vuser\Injections\Uninstaller;
 
 class ModuleServiceProvider extends ServiceProvider {
 
+    public function __construct(Application $app)
+    {
+        parent::__construct($app);
+    }
+
     public function boot() {
+        $this->app->make(Dispatcher::class)->subscribe(CsrfTokenRegister::class);
         $this->app->make(Dispatcher::class)->subscribe(RouteRegister::class);
+        $this->loadTranslationsFrom(realpath(__DIR__ . '/../resources/translations'), 'vuser');
+        $this->loadViewsFrom(realpath(__DIR__ . '/../resources/views'), 'vuser');
     }
 
     /**
