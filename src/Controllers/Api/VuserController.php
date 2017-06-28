@@ -8,23 +8,17 @@
  */
 namespace Notadd\Vuser\Controllers\Api;
 
-use Exception;
 use Illuminate\Auth\AuthManager;
-use League\OAuth2\Server\AuthorizationServer;
-use Notadd\Foundation\Auth\AuthenticatesUsers;
 use Notadd\Foundation\Routing\Abstracts\Controller;
+use Notadd\Vuser\Handlers\Vuser\LoginHandler;
 use Illuminate\Support\Facades\Auth;
-use Notadd\Foundation\Translation\Translator;
 
 class VuserController extends Controller {
 
-    use AuthenticatesUsers;
-
     protected $translator;
 
-    public function __construct(Translator $translator) {
+    public function __construct() {
         parent::__construct();
-        $this -> translator = $translator;
     }
 
     public function show() {
@@ -32,6 +26,8 @@ class VuserController extends Controller {
     }
 
     public function access(AuthManager $auth) {
+
+        dd(Auth::id());
 
         if($auth->guard('api')->user()) {
 
@@ -49,47 +45,8 @@ class VuserController extends Controller {
         ]);
     }
 
-    public function token() {
-
-        $this->validateLogin($this->request);
-        if ($this->hasTooManyLoginAttempts($this->request)) {
-            $this->fireLockoutEvent($this->request);
-            $seconds = $this->limiter()->availableIn($this->throttleKey($this->request));
-            $message = $this->translator->get('auth.throttle', ['seconds' => $seconds]);
-
-            return response() -> json([
-                'code'  => 403,
-                'message' => $message,
-            ]);
-        }
-
-        $this->incrementLoginAttempts($this->request);
-
-        $credentials = $this->credentials($this->request);
-        dd($credentials);
-        if ($this->guard()->attempt($credentials, $this->request->has('remember'))) {
-            $this->request->session()->regenerate();
-            $this->clearLoginAttempts($this->request);
-
-            return response() -> json([
-                'status' => 'ok',
-                'msg' => $this->translator->trans('vuser::login.success'),
-                'code' => 200
-            ]);
-        }
-
-
-        return response() -> json([
-            'status' => $this->translator->trans('vuser::login.fail'),
-            'msg' => 'false',
-            'code' => 310
-        ]);
-
+    public function token(LoginHandler $handler) {
+        return $handler->toResponse()->generateHttpResponse();
     }
-
-    public function username() {
-        return 'name';
-    }
-
 
 }
