@@ -99,11 +99,9 @@ class LoginHandler extends Handler {
                 if (isset($back['access_token']) && isset($back['refresh_token'])) {
 
                     return $this -> withCode(200)
-                        -> withData([
-                            'vcode' => 1000
-                        ])
                         -> withData($back)
-                        -> withMessage('vuser::login.1000');
+                        -> withMessage('vuser::login.1000')
+                        -> withExtra(['vcode' => 1000]);
 
                 }
 
@@ -111,21 +109,19 @@ class LoginHandler extends Handler {
 
                 return $this -> withCode(503)
                     -> withData([
-                        'vcode' => 1002,
                         'exception_code' => $exception->getCode(),
                         'message' => $exception->getMessage(),
                         'trace' => $exception->getTraceAsString()
                     ])
-                    -> withError('vuser::login.1002');
+                    -> withError('vuser::login.1002')
+                    -> withExtra(['vcode' => 1002]);
 
             }
         }
 
         return $this -> withCode(200)
-            -> withData([
-                'vcode' => 1001
-            ])
-            -> withMessage('vuser::login.1001');
+            -> withMessage('vuser::login.1001')
+            -> withExtra(['vcode' => 1001]);
 
     }
 
