@@ -101,7 +101,7 @@ class LoginHandler extends Handler {
                     return $this -> withCode(200)
                         -> withData($back)
                         -> withMessage('vuser::login.1000')
-                        -> withExtra(['vcode' => 1000]);
+                        -> withExtra(['scode' => 1000]);
 
                 }
 
@@ -114,14 +114,14 @@ class LoginHandler extends Handler {
                         'trace' => $exception->getTraceAsString()
                     ])
                     -> withError('vuser::login.1002')
-                    -> withExtra(['vcode' => 1002]);
+                    -> withExtra(['scode' => 1002]);
 
             }
         }
 
         return $this -> withCode(200)
             -> withMessage('vuser::login.1001')
-            -> withExtra(['vcode' => 1001]);
+            -> withExtra(['scode' => 1001]);
 
     }
 
