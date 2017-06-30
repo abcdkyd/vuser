@@ -8,10 +8,10 @@
  */
 namespace Notadd\Vuser\Controllers\Api;
 
-use Illuminate\Auth\AuthManager;
 use Notadd\Foundation\Routing\Abstracts\Controller;
+use Notadd\Vuser\Handlers\Vuser\AccessHandler;
 use Notadd\Vuser\Handlers\Vuser\LoginHandler;
-use Illuminate\Support\Facades\Auth;
+use Notadd\Vuser\Handlers\Vuser\RegisterHandler;
 
 class VuserController extends Controller {
 
@@ -25,27 +25,15 @@ class VuserController extends Controller {
         return view('vuser::index');
     }
 
-    public function access(AuthManager $auth) {
-
-        dd(Auth::id());
-
-        if($auth->guard('api')->user()) {
-
-            return response() -> json([
-                'status' => 'ok',
-                'msg' => '已登录',
-                'code' => 200
-            ]);
-        }
-
-        return response() -> json([
-            'status' => 'error',
-            'msg' => '请先登录',
-            'code' => 410
-        ]);
+    public function access(AccessHandler $handler) {
+        return $handler->toResponse()->generateHttpResponse();
     }
 
     public function token(LoginHandler $handler) {
+        return $handler->toResponse()->generateHttpResponse();
+    }
+
+    public function register(RegisterHandler $handler) {
         return $handler->toResponse()->generateHttpResponse();
     }
 
