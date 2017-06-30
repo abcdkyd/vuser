@@ -70,4 +70,8 @@ class ModuleServiceProvider extends ServiceProvider {
     {
         return Uninstaller::class;
     }
+
+    public static function version() {
+        return '0.1.0';
+    }
 }
