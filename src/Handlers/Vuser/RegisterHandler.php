@@ -11,7 +11,7 @@ namespace Notadd\Vuser\Handlers\Vuser;
 
 use Illuminate\Container\Container;
 use Notadd\Foundation\Routing\Abstracts\Handler;
-use Notadd\Vcaptcha\Models\VcaptchaLog;
+use Notadd\Vcaptcha\Models\VerifyCode;
 use Notadd\Member\Models\Member;
 
 class RegisterHandler extends Handler {
@@ -25,7 +25,7 @@ class RegisterHandler extends Handler {
         $code = $this -> request -> input('verifycode');
         $name = $this -> request -> input('name');
 
-        $query = VcaptchaLog::query() -> where(['phone' => $name]) -> orderBy('created_at', 'desc') -> first();
+        $query = VerifyCode::query() -> where(['phone' => $name]) -> orderBy('created_at', 'desc') -> first();
 
         if($code == $query['code_sended']) {
             $data = [
