@@ -26,8 +26,7 @@ class RouteRegister extends AbstractRouteRegister {
         });
 
         $this -> router -> group(['prefix' => 'test/vuser'], function() {
-            $this -> router -> post('register', VuserController::class . '@register');
-            $this -> router -> get('reg', VuserController::class . '@show');
+            $this -> router -> get('/', VuserController::class . '@show');
         });
 
     }

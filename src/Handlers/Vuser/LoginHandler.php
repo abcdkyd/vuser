@@ -119,7 +119,7 @@ class LoginHandler extends Handler {
             }
         }
 
-        return $this -> withCode(200)
+        return $this -> withCode(500)
             -> withMessage('vuser::login.1001')
             -> withExtra(['scode' => 1001]);
 

@@ -30,7 +30,7 @@ class RegisterHandler extends Handler {
         if($code == $query['code_sended']) {
             $data = [
                 'name' => $this -> request -> input('name'),
-                'password' => $this -> request -> input('password'),
+                'password' => bcrypt($this -> request -> input('password')),
                 'email' => '',
             ];
             if (Member::query()->create($data)) {

@@ -12,17 +12,17 @@
 <form name="myForm" method="post">
 
     <div>
-        <input type="text" name="name">
-        <input type="password" name="password" id="password">
-        <input type="button" id="sub_btn" value="提交">
+        手机号<input type="text" name="name">
+        密码<input type="password" name="password" id="password">
+        <input type="button" id="sub_btn" value="登录">
     </div>
 
     <div>
-        <input type="text" name="name2">
-        <input type="password" name="password2" id="password2">
-        <input type="text" name="verifycode" id="verifycode">
+        手机号<input type="text" name="name2">
+        密码<input type="password" name="password2" id="password2">
+        验证码<input type="text" name="verifycode" id="verifycode">
         <input type="button" value="获取验证码" id="getcode">
-        <input type="button" id="sub_btn2" value="提交">
+        <input type="button" id="sub_btn2" value="注册">
     </div>
 
 
@@ -34,17 +34,18 @@
 
                 $.ajax({
                     type: "POST",
-                    url : '/vuser/token',
+                    url : '/api/vuser/token',
                     contentType:'application/json;charset=UTF-8',
                     data: JSON.stringify({
                         name: $("input[name='name']").val(),
                         password: $('#password').val(),
                     }),
                     success: function (json) {
-                        console.log(json)
+                        alert('登录成功，access_token = '+json.data.access_token);
                     },
                     error: function (back) {
 
+                        alert('登录失败');
                         console.log(back);
 
                     }
@@ -57,11 +58,14 @@
                     type: "POST",
                     url : '/api/vcaptcha/get',
                     contentType:'application/json;charset=UTF-8',
+                    data: JSON.stringify({
+                        name: $("input[name='name2']").val(),
+                    }),
                     success: function (json) {
                         alert('验证码已发送');
                     },
                     error: function (back) {
-
+                        alert('验证码发送失败');
                         console.log(back);
 
                     }
@@ -71,7 +75,7 @@
             $('#sub_btn2').click(function () {
                 $.ajax({
                     type: "POST",
-                    url : '/test/vuser/register',
+                    url : '/api/vuser/register',
                     contentType:'application/json;charset=UTF-8',
                     data: JSON.stringify({
                         name: $("input[name='name2']").val(),
