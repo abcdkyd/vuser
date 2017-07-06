@@ -42,25 +42,22 @@ class AccessHandler extends Handler {
                 if (isset($back['access_token'])) {
                     return $this -> withCode(200)
                         -> withData($back)
-                        -> withMessage('vuser::login.1003')
-                        -> withExtra(['scode' => 1003]);
+                        -> withMessage('vuser::login.1003');
                 }
             } catch (Exception $exception) {
 
-                return $this -> withCode(503)
+                return $this -> withCode(414)
                     -> withData([
                         'exception_code' => $exception->getCode(),
                         'message' => $exception->getMessage(),
                         'trace' => $exception->getTraceAsString()
                     ])
-                    -> withError('vuser::login.1004')
-                    -> withExtra(['scode' => 1004]);
+                    -> withError('vuser::login.1002');
             }
         }
 
-        return $this -> withCode(200)
-            -> withMessage('vuser::login.1005')
-            -> withExtra(['scode' => 1005]);
+        return $this -> withCode(414)
+            -> withMessage('vuser::login.1004');
     }
 
 }

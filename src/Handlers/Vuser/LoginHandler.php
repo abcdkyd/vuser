@@ -100,7 +100,7 @@ class LoginHandler extends Handler {
 
                     return $this -> withCode(200)
                         -> withData($back)
-                        -> withMessage('vuser::login.0');
+                        -> withMessage('vuser::login.1000');
 
                 }
 
