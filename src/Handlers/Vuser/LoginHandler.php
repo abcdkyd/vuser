@@ -74,7 +74,7 @@ class LoginHandler extends Handler {
             $seconds = $this->limiter()->availableIn($this->throttleKey($this->request));
             $message = $this->translator->get('auth.throttle', ['seconds' => $seconds]);
 
-            return $this -> withCode(403)
+            return $this -> withCode(413)
                 -> withError($message);
         }
 
@@ -100,28 +100,25 @@ class LoginHandler extends Handler {
 
                     return $this -> withCode(200)
                         -> withData($back)
-                        -> withMessage('vuser::login.1000')
-                        -> withExtra(['scode' => 1000]);
+                        -> withMessage('vuser::login.0');
 
                 }
 
             } catch (Exception $exception) {
 
-                return $this -> withCode(503)
+                return $this -> withCode(414)
                     -> withData([
                         'exception_code' => $exception->getCode(),
                         'message' => $exception->getMessage(),
                         'trace' => $exception->getTraceAsString()
                     ])
-                    -> withError('vuser::login.1002')
-                    -> withExtra(['scode' => 1002]);
+                    -> withError('vuser::login.1002');
 
             }
         }
 
-        return $this -> withCode(500)
-            -> withMessage('vuser::login.1001')
-            -> withExtra(['scode' => 1001]);
+        return $this -> withCode(415)
+            -> withMessage('vuser::login.1001');
 
     }
 

@@ -61,13 +61,13 @@
                     data: JSON.stringify({
                         name: $("input[name='name2']").val(),
                     }),
+                    dataType:'json',
                     success: function (json) {
-                        alert('验证码已发送');
+                        alert(json.message[0]+'本地获取验证码为：'+json.data.name.message);
+                        console.log(json);
                     },
                     error: function (back) {
-                        alert('验证码发送失败');
-                        console.log(back);
-
+                        alert(back.responseJSON.message[0]);
                     }
                 });
             });
