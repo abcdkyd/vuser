@@ -61,10 +61,8 @@
                     data: JSON.stringify({
                         name: $("input[name='name2']").val(),
                     }),
-                    dataType:'json',
                     success: function (json) {
-                        alert(json.message[0]+'本地获取验证码为：'+json.data.name.message);
-                        console.log(json);
+                        alert(json.message[0]+'本地获取验证码为：'+json.data.message);
                     },
                     error: function (back) {
                         alert(back.responseJSON.message[0]);

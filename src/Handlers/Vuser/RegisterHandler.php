@@ -22,26 +22,59 @@ class RegisterHandler extends Handler {
 
     public function execute() {
 
-        $code = $this -> request -> input('verifycode');
-        $name = $this -> request -> input('name');
+        $this->validate($this->request, [
+            $this -> username() => 'required|regex:/^[0-9a-zA-Z_\/-]+$/',
+            'password' => 'required|regex:/^[0-9a-zA-Z_\/-]+$/',
+            'verifycode' => 'required|regex:/^\d{6}+$/'
+        ], [
+            $this -> username().'.regex' => '用户名包含非法字符',
+            $this -> username().'.required' => '请输入用户名',
+            'password.regex' => '密码包含非法字符',
+            'password.required' => '请输入密码',
+            'verifycode.regex' => '请输入正确的手机验证码',
+            'verifycode.required' => '请输入手机验证码',
+        ]);
 
-        $query = VerifyCode::query() -> where(['phone' => $name]) -> orderBy('created_at', 'desc') -> first();
+        $request_data = $this -> request -> all();
 
-        if($code == $query['code_sended']) {
-            $data = [
-                'name' => $this -> request -> input('name'),
-                'password' => bcrypt($this -> request -> input('password')),
-                'email' => '',
-            ];
-            if (Member::query()->create($data)) {
-                return $this->withCode(200)->withMessage('注册成功！');
-            } else {
-                return $this->withCode(500)->withError('注册失败2！');
-            }
+        // 检查用户是否存在
+        if(Member::query() -> where(['name' => $request_data['name']]) -> exists()) {
+            return $this -> withCode(423) -> withError('vuser::register.1014');
         }
 
-        return $this -> withCode(500) -> withError('注册失败1');
+        // 检查验证码
+        $query = VerifyCode::query() -> where(['phone' => $request_data['name']]) -> orderByDesc('created_at') -> first();
 
+        if(!$query) {
+            return $this -> withCode(416) -> withError('vuser::register.1012');
+        }
+
+        $query_data = $query->toArray();
+
+        // todo add verify time limit
+        if($request_data['verifycode'] == $query_data['code_sended']) {
+
+            $data = [
+                'name' => $request_data['name'],
+                'password' => bcrypt($request_data['password']),
+                'email' => '',
+                'phone' => $request_data['name']
+            ];
+
+            if (Member::query()->create($data)) {
+                return $this->withCode(200)->withMessage('vuser::register.1010');
+            } else {
+                return $this -> withCode(421) -> withError('vuser::register.1011');
+            }
+        } else {
+            return $this -> withCode(422) -> withError('vuser::register.1013');
+        }
+
+
+    }
+
+    public function username() {
+        return 'name';
     }
 
 }
