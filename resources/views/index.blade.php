@@ -82,11 +82,10 @@
                     }),
                     success: function (json) {
                         console.log(json);
+                        alert(json.message[0]+'登录获取access_token='+json.data.access_token);
                     },
                     error: function (back) {
-
-                        console.log(back);
-
+                        alert(back.responseJSON.message[0]);
                     }
                 });
             });
