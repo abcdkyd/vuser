@@ -118,7 +118,7 @@ class LoginHandler extends Handler {
         }
 
         return $this -> withCode(415)
-            -> withMessage('vuser::login.1001');
+            -> withError('vuser::login.1001');
 
     }
 

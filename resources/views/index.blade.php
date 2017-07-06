@@ -44,8 +44,7 @@
                         alert('登录成功，access_token = '+json.data.access_token);
                     },
                     error: function (back) {
-
-                        alert('登录失败');
+                        alert(back.responseJSON.message[0]);
                         console.log(back);
 
                     }
