@@ -54,8 +54,8 @@
 
             $('#getcode').click(function () {
                 $.ajax({
-                    type: "POST",
-                    url : '/api/vcaptcha/get',
+                    type: "GET",
+                    url : '/api/vcaptcha',
                     contentType:'application/json;charset=UTF-8',
                     data: JSON.stringify({
                         name: $("input[name='name2']").val(),
@@ -72,7 +72,7 @@
             $('#sub_btn2').click(function () {
                 $.ajax({
                     type: "POST",
-                    url : '/api/vuser/register',
+                    url : '/api/vuser',
                     contentType:'application/json;charset=UTF-8',
                     data: JSON.stringify({
                         name: $("input[name='name2']").val(),
