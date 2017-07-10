@@ -57,7 +57,7 @@ class AccessHandler extends Handler {
         }
 
         return $this -> withCode(414)
-            -> withMessage('vuser::login.1004');
+            -> withError('vuser::login.1004');
     }
 
 }

@@ -11,7 +11,7 @@ namespace Notadd\Vuser\Handlers\Vuser;
 
 use Illuminate\Container\Container;
 use Notadd\Foundation\Routing\Abstracts\Handler;
-use Notadd\Vcaptcha\Models\VerifyCode;
+use Notadd\Verify\Models\VerifyCode;
 use Notadd\Member\Models\Member;
 use Notadd\Foundation\Auth\AuthenticatesUsers;
 use Notadd\Foundation\Translation\Translator;

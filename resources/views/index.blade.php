@@ -55,11 +55,11 @@
             $('#getcode').click(function () {
                 $.ajax({
                     type: "GET",
-                    url : '/api/vcaptcha',
+                    url : '/api/verify',
                     contentType:'application/json;charset=UTF-8',
-                    data: JSON.stringify({
+                    data: {
                         name: $("input[name='name2']").val(),
-                    }),
+                    },
                     success: function (json) {
                         alert(json.message[0]+'本地获取验证码为：'+json.data.message);
                     },
