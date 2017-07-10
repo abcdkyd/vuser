@@ -8,6 +8,7 @@
 namespace Notadd\Vuser\Handlers\Vuser;
 
 use Exception;
+use Illuminate\Validation\ValidationException;
 use Notadd\Foundation\Routing\Abstracts\Handler;
 use Notadd\Foundation\Auth\AuthenticatesUsers;
 use Notadd\Foundation\Translation\Translator;
@@ -59,15 +60,24 @@ class LoginHandler extends Handler {
 
     protected function execute() {
 
-        $this->validateLogin($this->request);
+        try {
+            $this->validateLogin($this->request);
 
-        $this->validate($this->request, [
-            $this -> username() => 'regex:/^[0-9a-zA-Z_\/-]+$/',
-            'password' => 'regex:/^[0-9a-zA-Z_\/-]+$/'
-        ], [
-            $this -> username().'.regex' => '用户名包含非法字符',
-            'password.regex' => '密码包含非法字符',
-        ]);
+            $this->validate($this->request, [
+                $this -> username() => 'regex:/^[0-9a-zA-Z_\/-]+$/',
+                'password' => 'regex:/^[0-9a-zA-Z_\/-]+$/'
+            ], [
+                $this -> username().'.regex' => '用户名包含非法字符',
+                'password.regex' => '密码包含非法字符',
+            ]);
+        } catch (ValidationException $e) {
+            $data = $e -> getResponse() -> getData();
+            $messages = array_column(get_object_vars($data), 0);
+            return $this -> withCode(417)
+                -> withError($messages);
+        }
+
+
 
         if ($this->hasTooManyLoginAttempts($this->request)) {
             $this->fireLockoutEvent($this->request);

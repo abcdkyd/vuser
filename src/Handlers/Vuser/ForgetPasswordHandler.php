@@ -9,6 +9,7 @@
 namespace Notadd\Vuser\Handlers\Vuser;
 
 use Illuminate\Container\Container;
+use Illuminate\Validation\ValidationException;
 use Notadd\Foundation\Routing\Abstracts\Handler;
 use Notadd\Vuser\Models\Member;
 use Notadd\Verify\Models\VerifyCode;
@@ -21,18 +22,25 @@ class ForgetPasswordHandler extends Handler {
 
     public function execute() {
 
-        $this->validate($this->request, [
-            $this -> username() => 'required|regex:/^[0-9a-zA-Z_\/-]+$/',
-            'password' => 'required|regex:/^[0-9a-zA-Z_\/-]+$/',
-            'verifycode' => 'required|regex:/^\d{6}+$/'
-        ], [
-            $this -> username().'.regex' => '用户名包含非法字符',
-            $this -> username().'.required' => '请输入用户名',
-            'password.regex' => '密码包含非法字符',
-            'password.required' => '请输入密码',
-            'verifycode.regex' => '请输入正确的手机验证码',
-            'verifycode.required' => '请输入手机验证码',
-        ]);
+        try {
+            $this->validate($this->request, [
+                $this -> username() => 'required|regex:/^[0-9a-zA-Z_\/-]+$/',
+                'password' => 'required|regex:/^[0-9a-zA-Z_\/-]+$/',
+                'verifycode' => 'required|regex:/^\d{6}+$/'
+            ], [
+                $this -> username().'.regex' => '用户名包含非法字符',
+                $this -> username().'.required' => '请输入用户名',
+                'password.regex' => '密码包含非法字符',
+                'password.required' => '请输入密码',
+                'verifycode.regex' => '请输入正确的手机验证码',
+                'verifycode.required' => '请输入手机验证码',
+            ]);
+        } catch(ValidationException $e) {
+            $data = $e -> getResponse() -> getData();
+            $messages = array_column(get_object_vars($data), 0);
+            return $this -> withCode(417)
+                -> withError($messages);
+        }
 
         $request_data = $this -> request -> all();
 
