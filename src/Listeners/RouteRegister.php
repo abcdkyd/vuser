@@ -18,6 +18,11 @@ class RouteRegister extends AbstractRouteRegister {
         $this->router->group(['middleware' => ['cross', 'web'], 'prefix' => 'api/vuser'], function () {
             $this -> router -> post('/token', VuserController::class . '@token');
             $this -> router -> post('/', VuserController::class . '@register');
+            $this -> router -> post('/password', VuserController::class . '@forgetPassword');
+        });
+
+        $this->router->group(['middleware' => ['auth:api','cross', 'web'], 'prefix' => 'api/vuser'], function () {
+            $this -> router -> put('/password', VuserController::class . '@modifyPassword');
         });
 
 //        $this->router->group(['middleware' => ['api', 'cross', 'web'], 'prefix' => 'api/vuser'], function () {

@@ -36,6 +36,6 @@ class CsrfTokenRegister extends EventSubscriber
     {
         $event->registerExcept('api/vuser');
         $event->registerExcept('api/vuser/token');
-        $event->registerExcept('api/vuser/register');
+        $event->registerExcept('api/vuser/password');
     }
 }

@@ -23,6 +23,7 @@
         验证码<input type="text" name="verifycode" id="verifycode">
         <input type="button" value="获取验证码" id="getcode">
         <input type="button" id="sub_btn2" value="注册">
+        <input type="button" value="找回密码" id="sub_btn3">
     </div>
 
 
@@ -82,6 +83,26 @@
                     success: function (json) {
                         console.log(json);
                         alert(json.message[0]+'登录获取access_token='+json.data.access_token);
+                    },
+                    error: function (back) {
+                        alert(back.responseJSON.message[0]);
+                    }
+                });
+            });
+
+            $('#sub_btn3').click(function () {
+                $.ajax({
+                    type: "POST",
+                    url : '/api/vuser/password',
+                    contentType:'application/json;charset=UTF-8',
+                    data: JSON.stringify({
+                        name: $("input[name='name2']").val(),
+                        password: $('#password2').val(),
+                        verifycode: $('#verifycode').val(),
+                    }),
+                    success: function (json) {
+                        console.log(json);
+                        alert(json.message[0]);
                     },
                     error: function (back) {
                         alert(back.responseJSON.message[0]);

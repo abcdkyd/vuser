@@ -12,6 +12,7 @@ use Notadd\Foundation\Routing\Abstracts\Controller;
 use Notadd\Vuser\Handlers\Vuser\AccessHandler;
 use Notadd\Vuser\Handlers\Vuser\LoginHandler;
 use Notadd\Vuser\Handlers\Vuser\RegisterHandler;
+use Notadd\Vuser\Handlers\Vuser\ForgetPasswordHandler;
 
 class VuserController extends Controller {
 
@@ -34,6 +35,10 @@ class VuserController extends Controller {
     }
 
     public function register(RegisterHandler $handler) {
+        return $handler->toResponse()->generateHttpResponse();
+    }
+
+    public function forgetPassword(ForgetPasswordHandler $handler) {
         return $handler->toResponse()->generateHttpResponse();
     }
 
